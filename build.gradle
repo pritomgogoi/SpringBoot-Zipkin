@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("com.kenshoo:gradle-fpm:0.5")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+war {
+	archiveName 'ROOT.war'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+ext {
+	springCloudVersion = 'Dalston.SR4'
+}
+
+dependencies {
+	compile group: 'io.zipkin.java', name: 'zipkin-server', version: '1.29.4'
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('io.zipkin.java:zipkin-autoconfigure-storage-mysql:1.17.1')
+	compile group: 'io.zipkin.dependencies', name: 'zipkin-dependencies-mysql', version: '1.11.0'
+	compile('org.springframework.boot:spring-boot-starter-jdbc:1.5.8.RELEASE')
+	runtime('io.zipkin.java:zipkin-autoconfigure-ui')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}

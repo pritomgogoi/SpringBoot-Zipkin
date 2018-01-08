@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Zipkin-Server
+  profiles:
+    active: ${CLOUD_ENVIRONMENT:local}
+  sleuth:
+    enabled: false
+zipkin:
+  storage:
+      type: mysql
